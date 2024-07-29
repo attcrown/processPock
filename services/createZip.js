@@ -15,6 +15,7 @@ async function createZips(zipDir, outputDir) {
             const zipPath = path.join(zipDir, `${dir}.zip`);
             // สร้างไฟล์ ZIP
             await createZip(dirPath, zipPath);
+            console.log('create zip:'+dir+'.zip')
         }
     } catch (err) {
         console.error('Error:', err);
