@@ -2,15 +2,15 @@ const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 const fs = require('fs-extra');
 
-async function createDB(dbDir) {
+async function createDB(dbDir ,fileNameDB) {
     try {
         // สร้างไดเรกทอรีถ้าไม่อยู่
         if (!fs.existsSync(dbDir)) {
             fs.mkdirSync(dbDir, { recursive: true });
         }
 
-        const dbPath = path.join(dbDir, 'dictionary.db');
-        
+        const dbPath = path.join(dbDir, fileNameDB);
+
         // สร้าง Promise สำหรับการทำงานกับฐานข้อมูล
         const db = new sqlite3.Database(dbPath);
 

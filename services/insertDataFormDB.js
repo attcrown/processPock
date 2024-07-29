@@ -2,9 +2,9 @@ const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 const fs = require('fs-extra');
 
-async function insertDataFromFile(dbDir, filePath) {
+async function insertDataFromFile(dbDir, filePath ,fileNameDB) {
     try {
-        const dbPath = path.join(dbDir, 'dictionary.db');
+        const dbPath = path.join(dbDir, fileNameDB);
         const db = new sqlite3.Database(dbPath);
 
         // อ่านข้อมูลจากไฟล์
@@ -33,8 +33,6 @@ async function insertDataFromFile(dbDir, filePath) {
                 });
             });
         });
-
-        console.log('Data inserted successfully.');
     } catch (error) {
         console.error('Error inserting data:', error);
     }

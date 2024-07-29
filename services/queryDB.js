@@ -2,8 +2,8 @@ const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 
 // ฟังก์ชันสำหรับ query จำนวนคำที่มีความยาวมากกว่า 5 ตัวอักษร
-async function countWordsLongerThanFive(dbDir) {
-    const dbPath = path.join(dbDir, 'dictionary.db');
+async function countWordsLongerThanFive(dbDir,fileNameDB) {
+    const dbPath = path.join(dbDir, fileNameDB);
     const db = new sqlite3.Database(dbPath);
     const sql = 'SELECT COUNT(*) AS count FROM words WHERE LENGTH(name) > 5';
     const count = await queryCount(db, sql);
@@ -12,8 +12,8 @@ async function countWordsLongerThanFive(dbDir) {
 }
 
 // ฟังก์ชันสำหรับ query จำนวนคำที่มีตัวอักษรซ้ำในคำมากกว่าหรือเท่ากับ 2 ตัวอักษร
-async function countWordsWithRepeatingCharacters(dbDir) {
-    const dbPath = path.join(dbDir, 'dictionary.db');
+async function countWordsWithRepeatingCharacters(dbDir,fileNameDB) {
+    const dbPath = path.join(dbDir, fileNameDB);
     const db = new sqlite3.Database(dbPath);
     const sql = `
         SELECT COUNT(*) AS count FROM words
@@ -31,8 +31,8 @@ async function countWordsWithRepeatingCharacters(dbDir) {
 }
 
 // ฟังก์ชันสำหรับ query จำนวนคำที่ขึ้นต้นและลงท้ายด้วยตัวอักษรเดียวกัน
-async function countWordsWithSameStartEnd(dbDir) {
-    const dbPath = path.join(dbDir, 'dictionary.db');
+async function countWordsWithSameStartEnd(dbDir,fileNameDB) {
+    const dbPath = path.join(dbDir, fileNameDB);
     const db = new sqlite3.Database(dbPath);
     const sql = 'SELECT COUNT(*) AS count FROM words WHERE SUBSTR(name, 1, 1) = SUBSTR(name, -1, 1)';
     const count = await queryCount(db, sql);
@@ -41,8 +41,8 @@ async function countWordsWithSameStartEnd(dbDir) {
 }
 
 // ฟังก์ชันสำหรับ query ให้ตัวอักษรแรกของคำเป็นตัวพิมพ์ใหญ่
-async function capitalizeFirstLetter(dbDir) {
-    const dbPath = path.join(dbDir, 'dictionary.db');
+async function capitalizeFirstLetter(dbDir,fileNameDB) {
+    const dbPath = path.join(dbDir, fileNameDB);
     const db = new sqlite3.Database(dbPath);
     const sql = `UPDATE words SET name = UPPER(SUBSTR(name, 1, 1)) || LOWER(SUBSTR(name, 2))`;
     await queryCount(db, sql);

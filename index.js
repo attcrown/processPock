@@ -15,7 +15,10 @@ const {
 
 const path = require('path');
 
-const dictionaryPath = path.join(__dirname, 'dictionary.txt');
+const fileNameDictionary = 'dictionary.txt';
+const fileNameDB = 'dictionary.db';
+
+const dictionaryPath = path.join(__dirname, fileNameDictionary);
 const outputDir = path.join(__dirname, 'output');
 const reportDir = path.join(__dirname, 'report.pdf');
 const reportDBDir = path.join(__dirname, 'reportDB.pdf');
@@ -59,19 +62,19 @@ async function start() {
     await generateReport(outputDir ,reportDir ,zipDir);
 
     // create database
-    await createDB(dbDir);
+    await createDB(dbDir ,fileNameDB);
     console.log('Database created successfully.');
 
     // insert database
-    await insertDataFromFile(dbDir ,dictionaryPath);
+    await insertDataFromFile(dbDir ,dictionaryPath ,fileNameDB);
     console.log('Data inserted successfully.');
 
     //query database
     const [countWord, countWordRepeating, countWordSameStartEnd ,capitalizeFirst] = await Promise.all([
-        countWordsLongerThanFive(dbDir),
-        countWordsWithRepeatingCharacters(dbDir),
-        countWordsWithSameStartEnd(dbDir),
-        capitalizeFirstLetter(dbDir),
+        countWordsLongerThanFive(dbDir ,fileNameDB),
+        countWordsWithRepeatingCharacters(dbDir ,fileNameDB),
+        countWordsWithSameStartEnd(dbDir ,fileNameDB),
+        capitalizeFirstLetter(dbDir ,fileNameDB),
     ]);
     const dataAns = {
         countWord,
