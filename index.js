@@ -1,13 +1,10 @@
-const express = require('express');
-const path = require('path');
-const { exec } = require('child_process');
-const sqlite3 = require('sqlite3').verbose();
-
 const { readFileTxt } = require('./services/readFileTxt');
 const { createFile } = require('./services/createFile');
 const { writeFile } = require('./services/writeFile');
 const { generateReport } = require('./services/reportPdf');
 const { createZips } = require('./services/createZip');
+
+const path = require('path');
 
 const dictionaryPath = path.join(__dirname, 'dictionary.txt');
 const outputDir = path.join(__dirname, 'output');
