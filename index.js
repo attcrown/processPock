@@ -7,7 +7,7 @@ const { readFileTxt } = require('./services/readFileTxt');
 const { createFile } = require('./services/createFile');
 const { writeFile } = require('./services/writeFile');
 const { generateReport } = require('./services/reportPdf');
-const { createZipsAndReport } = require('./services/createZip');
+const { createZips } = require('./services/createZip');
 
 const dictionaryPath = path.join(__dirname, 'dictionary.txt');
 const outputDir = path.join(__dirname, 'output');
@@ -44,12 +44,11 @@ async function start() {
     console.log('Files created successfully.');
 
     // generate zip files
-    await createZipsAndReport(zipDir ,outputDir ,reportDir);
+    await createZips(zipDir ,outputDir);
+    console.log('ZIP creation and report generation completed.');
 
     // generate report
-    // await generateReport(outputDir ,reportDir);
-    // console.log('Application completed.');
-
-
+    await generateReport(outputDir ,reportDir ,zipDir);
+    console.log('Application completed.');
 }
 
