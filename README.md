@@ -12,6 +12,7 @@ Step setup program v.1.0.0 and v.1.0.1
   
   6: final process
   
+--------------------------------------------
 
 Step setup program v.1.0.2 and v.1.0.3
 
