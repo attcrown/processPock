@@ -32,7 +32,7 @@ function createZip(sourceDir, outputZipPath) {
         const archive = archiver('zip', { zlib: { level: 9 } });
 
         output.on('close', () => {
-            console.log(`ZIP file created: ${outputZipPath}`);
+            // console.log(`ZIP file created: ${outputZipPath}`);
             resolve();
         });
         archive.on('error', reject);

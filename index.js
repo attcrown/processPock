@@ -49,7 +49,7 @@ async function start() {
             //duo speed
             await createFile(words[i] ,outputDir);
             await writeFile(words[i] ,outputDir);
-            console.log('Created file:', words[i]);
+            // console.log('Created file:', words[i]);
         }
     }
     console.log('Files created successfully.');
