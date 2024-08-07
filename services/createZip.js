@@ -11,14 +11,11 @@ async function createZips(zipDir, outputDir) {
         const directories = folders.filter(folder => folder.isDirectory()).map(folder => folder.name);
 
         // สร้างไฟล์ ZIP พร้อมกัน
-        const zipPromises = directories.map(dir => {
+        for (const dir of directories) {
             const dirPath = path.join(outputDir, dir);
             const zipPath = path.join(zipDir, `${dir}.zip`);
-            return createZip(dirPath, zipPath);
-        });
-
-        // รอให้ทุกไฟล์ ZIP ถูกสร้างเสร็จ
-        await Promise.all(zipPromises);
+            await createZip(dirPath, zipPath);
+        }
 
         console.log('All ZIP files created successfully.');
     } catch (err) {

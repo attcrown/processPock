@@ -70,18 +70,11 @@ async function start() {
     console.log('Data inserted successfully.');
 
     //query database
-    const [countWord, countWordRepeating, countWordSameStartEnd ,capitalizeFirst] = await Promise.all([
-        countWordsLongerThanFive(dbDir ,fileNameDB),
-        countWordsWithRepeatingCharacters(dbDir ,fileNameDB),
-        countWordsWithSameStartEnd(dbDir ,fileNameDB),
-        capitalizeFirstLetter(dbDir ,fileNameDB),
-    ]);
-    const dataAns = {
-        countWord,
-        countWordRepeating,
-        countWordSameStartEnd,
-        capitalizeFirst
-    };
+    let dataAns = {};
+    dataAns = {countWord : await countWordsLongerThanFive(dbDir ,fileNameDB)};
+    dataAns = { ...dataAns, countWordRepeating : await countWordsWithRepeatingCharacters(dbDir ,fileNameDB)};
+    dataAns = { ...dataAns, countWordSameStartEnd : await countWordsWithSameStartEnd(dbDir ,fileNameDB)};
+    dataAns = {  ...dataAns, capitalizeFirst : await capitalizeFirstLetter(dbDir ,fileNameDB)};
 
     // generate report
     await generateReportDB(dataAns, reportDBDir);
