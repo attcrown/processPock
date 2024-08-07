@@ -11,6 +11,11 @@ async function createDB(dbDir ,fileNameDB) {
 
         const dbPath = path.join(dbDir, fileNameDB);
 
+        // ลบฐานข้อมูลเดิมถ้ามีอยู่
+        if (fs.existsSync(dbPath)) {
+            fs.unlinkSync(dbPath);
+        }
+        
         // สร้าง Promise สำหรับการทำงานกับฐานข้อมูล
         const db = new sqlite3.Database(dbPath);
 

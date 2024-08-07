@@ -12,18 +12,27 @@ async function countWordsLongerThanFive(dbDir,fileNameDB) {
 }
 
 // ฟังก์ชันสำหรับ query จำนวนคำที่มีตัวอักษรซ้ำในคำมากกว่าหรือเท่ากับ 2 ตัวอักษร
-async function countWordsWithRepeatingCharacters(dbDir,fileNameDB) {
+async function countWordsWithRepeatingCharacters(dbDir, fileNameDB) {
     const dbPath = path.join(dbDir, fileNameDB);
     const db = new sqlite3.Database(dbPath);
     const sql = `
         SELECT COUNT(*) AS count FROM words
-        WHERE (SELECT MAX(count) FROM
-            (SELECT COUNT(*) AS count FROM
-                (SELECT SUBSTR(name, pos, 1) AS char FROM words,
-                (SELECT 1 AS pos UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9 UNION SELECT 10)
-                WHERE pos <= LENGTH(name) AND words.name = words.name)
-            GROUP BY char)
-        ) >= 2
+        WHERE EXISTS (
+            SELECT 1 FROM (
+                WITH RECURSIVE seq AS (
+                    SELECT 1 AS pos
+                    UNION ALL
+                    SELECT pos + 1 FROM seq
+                    WHERE pos < (SELECT MAX(LENGTH(name)) FROM words)
+                )
+                SELECT name, SUBSTR(name, seq.pos, 1) AS char, COUNT(*) AS char_count
+                FROM words, seq
+                WHERE seq.pos <= LENGTH(name)
+                GROUP BY name, char
+                HAVING char_count >= 2
+            ) AS char_counts
+            WHERE words.name = char_counts.name
+        )
     `;
     const count = await queryCount(db, sql);
     db.close();
