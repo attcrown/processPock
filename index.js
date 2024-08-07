@@ -29,6 +29,7 @@ start();
 
 async function start() {
     console.log('Starting application...');
+    const start = Date.now();
     // read file text
     const data = await readFileTxt(dictionaryPath);
     console.log('Dictionary data loaded.');
@@ -74,6 +75,11 @@ async function start() {
     };
     // generate report
     await generateReportDB(dataAns, reportDBDir);
+    
+    const end = Date.now();
+    const ansTime = end - start;
+    const ansTimeSec = ansTime / 1000;
+    console.log('Time: ',ansTimeSec, 'sec');
     console.log('Application completed.');
 }
 
