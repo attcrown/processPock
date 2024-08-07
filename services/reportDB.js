@@ -13,7 +13,7 @@ async function generateReportDB (dataAns, outputPdfPath) {
     // เขียนผลลัพธ์จาก dataAns ลงใน PDF
     doc.fontSize(12).text(`Total words with length > 5: ${dataAns.countWord}`);
     doc.moveDown();
-    doc.fontSize(12).text(`Total words with repeating characters: ${dataAns.countWordRepeating}`);
+    doc.fontSize(12).text(`Total words with repeating >=2 characters: ${dataAns.countWordRepeating}`);
     doc.moveDown();
     doc.fontSize(12).text(`Total words with same start and end character: ${dataAns.countWordSameStartEnd}`);
     doc.moveDown();

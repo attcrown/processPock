@@ -1,7 +1,6 @@
 const fs = require('fs-extra');
 const path = require('path');
 const PDFDocument = require('pdfkit');
-const AdmZip = require('adm-zip');
 
 async function generateReport(outputDir, reportDir, zipDir) {
     try {
@@ -17,7 +16,7 @@ async function generateReport(outputDir, reportDir, zipDir) {
 
         // คำนวณขนาดโฟลเดอร์หลัก
         const totalSize = await getFolderSize(outputDir);
-        doc.fontSize(12).text(`Total size of the output folder: ${totalSize} bytes`);
+        doc.fontSize(12).text(`Total size of the output folder: ${parseFloat(totalSize / 1024).toFixed(3)} KB`);
         doc.moveDown();
 
         // คำนวณขนาดโฟลเดอร์ย่อย
@@ -46,8 +45,8 @@ async function generateReport(outputDir, reportDir, zipDir) {
 
             // เขียนข้อมูลขนาดลงใน PDF
             doc.fontSize(12).text(`Folder: ${folder}`);
-            doc.fontSize(12).text(`  Before: Size of folder: ${sizeBefore} bytes`);
-            doc.fontSize(12).text(`  After: Size of zip file: ${sizeAfter} bytes`);
+            doc.fontSize(12).text(`  Before: Size of folder: ${parseFloat(sizeBefore / 1024).toFixed(3)} KB`);
+            doc.fontSize(12).text(`  After: Size of zip file: ${parseFloat(sizeAfter / 1024).toFixed(3)} KB`);
             doc.fontSize(12).text(`  Reduction: ${reduction}%`);
             doc.moveDown();
         }
