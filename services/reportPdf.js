@@ -1,7 +1,6 @@
 const fs = require('fs-extra');
 const path = require('path');
 const PDFDocument = require('pdfkit');
-const AdmZip = require('adm-zip');
 
 async function generateReport(outputDir, reportDir, zipDir) {
     try {
